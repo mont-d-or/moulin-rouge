@@ -1,32 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import './App.css'
+import "react-datepicker/dist/react-datepicker.css"
+import DatePicker from "react-datepicker"
+import { setDate } from 'date-fns'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [previousDates, setPreviousDates] = useState<Array<Date>>([])
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+
+  const addDateToPreviousDates = () => {
+    if (selectedDate == null) {
+      return
+    }
+    previousDates.push(selectedDate)
+    setSelectedDate(null)
+  }
 
   return (
-    <div className="App">
+    <div>
+      <h1>Moulin Rouge</h1>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {
+          previousDates.map(d => <div>{d.toDateString()}</div>)
+        }
       </div>
-      <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+        <button onClick={addDateToPreviousDates}>Add</button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
