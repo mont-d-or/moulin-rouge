@@ -1,8 +1,20 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
-test('homepage has Playwright in title and get started link linking to the intro page', async ({ page }) => {
-  await page.goto('http://localhost:5173/');
+test('adds one item into the history', async ({ page }) => {
+  openPage(page)
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Vite \+ React \+ TS/);
-});
+  addDateFromDatePicker(page, 'Tuesday, October 18th, 2022')
+
+  const dateHistoryItem = page.getByText('18-10-2022')
+  await expect(dateHistoryItem).toHaveClass('history-item')
+})
+
+const openPage = async (page: Page) => {
+  await page.goto('http://localhost:5173/')
+}
+
+const addDateFromDatePicker = async (page: Page, choosenDate: string) => {
+  await page.locator('input[name="datepicker"]').click()
+  await page.getByRole('option', { name: 'Choose ' + choosenDate }).click()
+  await page.getByRole('button', { name: 'Add' }).click()
+}

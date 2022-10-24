@@ -23,6 +23,8 @@ Based on vitejs + reactjs + typescript.
 
     pnpm dlx playwright test
 
+Use option `--trace on` to get details about failing execution.
+
 ### Generate new playwright tests
 
     pnpm dlx playwright codegen

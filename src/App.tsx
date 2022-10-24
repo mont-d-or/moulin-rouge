@@ -41,11 +41,11 @@ const App = () => {
       <h1>Moulin Rouge</h1>
       <div>
         {
-          previousDates.map(d => <div key={d.toString()}>{d.format('DD-MM-YYYY')}</div>)
+          previousDates.map(d => <div className='history-item' key={d.toString()}>{d.format('DD-MM-YYYY')}</div>)
         }
       </div>
       <div className="card">
-        <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} />
+        <DatePicker selected={selectedDate} name='datepicker' onChange={(date) => setSelectedDate(date)} />
         <button onClick={addDateToPreviousDates}>Add</button>
       </div>
     </div>
