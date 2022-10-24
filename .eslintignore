@@ -1,0 +1,5 @@
+vite.config.ts
+playwright.config.ts
+dist
+playwright-report
+tests-examples

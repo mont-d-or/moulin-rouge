@@ -1,40 +1,36 @@
-import { useEffect, useState } from 'react'
+import 'react-datepicker/dist/react-datepicker.css'
 import './App.css'
-import "react-datepicker/dist/react-datepicker.css"
-import DatePicker from "react-datepicker"
-import 'moment'
+import { useEffect, useState } from 'react'
+import DatePicker from 'react-datepicker'
+import PeriodEvent from './PeriodEvent'
 import moment from 'moment'
-
-const loadFromLocalStorage: () => Array<moment.Moment> = () => {
-  const loadedDates: Array<moment.Moment> = []
-  const storedDates = window.localStorage.getItem('previousDates')
   if (storedDates != null) {
-    loadedDates.push(...JSON.parse(storedDates).map((dateString: moment.MomentInput) => moment(dateString, "YYYY-MM-DD")))
+    loadedDates.push(...JSON.parse(storedDates).map((dateString: moment.MomentInput) => moment(dateString, 'YYYY-MM-DD')));
   }
-  return loadedDates
-}
+  return loadedDates;
+};
 
 const saveIntoLocalStorage = (dates: Array<moment.Moment>) => {
-  const localStorageString = JSON.stringify(dates.map((date) => date.format("YYYY-MM-DD")))
-  window.localStorage.setItem('previousDates', localStorageString)
-}
+  const localStorageString = JSON.stringify(dates.map((date) => date.format('YYYY-MM-DD')));
+  window.localStorage.setItem('previousDates', localStorageString);
+};
 
 const App = () => {
-  const [previousDates, setPreviousDates] = useState<Array<moment.Moment>>([])
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+  const [previousDates, setPreviousDates] = useState<Array<moment.Moment>>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   useEffect(() => {
-    setPreviousDates(loadFromLocalStorage())
-  }, [])
+    setPreviousDates(loadFromLocalStorage());
+  }, []);
 
   const addDateToPreviousDates = () => {
     if (selectedDate == null) {
-      return
+      return;
     }
-    previousDates.push(moment(selectedDate))
-    setSelectedDate(null)
-    saveIntoLocalStorage(previousDates)
-  }
+    previousDates.push(moment(selectedDate));
+    setSelectedDate(null);
+    saveIntoLocalStorage(previousDates);
+  };
 
   return (
     <div>
@@ -49,7 +45,7 @@ const App = () => {
         <button onClick={addDateToPreviousDates}>Add</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

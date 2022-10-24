@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "airbnb-typescript/base"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "": "never"
+      }
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
+    "sort-imports": [
+      "error"
+    ],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "@typescript-eslint/semi": "off"
+  },
+  "plugins": [
+    "import"
+  ]
+}
