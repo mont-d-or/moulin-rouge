@@ -26,10 +26,17 @@
       "error",
       "never"
     ],
-    "@typescript-eslint/semi": "off"
+    "@typescript-eslint/semi": "off",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 1
+      }
+    ]
   },
   "plugins": [
-    "import",
-    "jsx-a11y"
+    "import"
   ]
 }
