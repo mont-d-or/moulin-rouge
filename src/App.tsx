@@ -5,20 +5,23 @@ import DatePicker from 'react-datepicker'
 import PeriodEvent from './PeriodEvent'
 import moment from 'moment'
 
-
-const loadFromLocalStorage: () => Set<moment.Moment> = () => {
-  console.log('Load from local storage')
-  const storedDates = window.localStorage.getItem('previousDates')
-  const loadedDates: Set<moment.Moment> = new Set()
-  if (storedDates != null) {
-    (JSON.parse(storedDates) as string[]).forEach((dateString: moment.MomentInput) => loadedDates.add(moment(dateString, 'YYYY-MM-DD')))
-  }
-  return loadedDates
+interface MoulinRougeData {
+  historyItems: Set<moment.Moment>
 }
 
-const saveIntoLocalStorage = (dates: Set<moment.Moment>) => {
-  console.log('Save into local storage:', dates.size)
-  const localStorageString = JSON.stringify([...dates].map((date) => date.format('YYYY-MM-DD')))
+const loadFromLocalStorage: () => MoulinRougeData = () => {
+  console.log('Load from local storage')
+  const storedData = window.localStorage.getItem('previousDates')
+  if (storedData == null) {
+    return { historyItems: new Set() }
+  }
+  const parsedData = JSON.parse(storedData) as MoulinRougeData
+  return parsedData
+}
+
+const saveIntoLocalStorage = (data: MoulinRougeData) => {
+  console.log('Save into local storage:', data.historyItems.size)
+  const localStorageString = JSON.stringify(data)
   window.localStorage.setItem('previousDates', localStorageString)
 }
 
@@ -26,8 +29,8 @@ const App = () => {
   const [history, setHistory] = useState<Set<moment.Moment> | undefined>(undefined)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
-  useEffect(() => history && saveIntoLocalStorage(history), [history])
-  useEffect(() => setHistory(loadFromLocalStorage()), [])
+  useEffect(() => history && saveIntoLocalStorage({ historyItems: history }), [history])
+  useEffect(() => setHistory(loadFromLocalStorage().historyItems), [])
 
   const addDateToHistory = () => {
     if (selectedDate == null || history == undefined) {
