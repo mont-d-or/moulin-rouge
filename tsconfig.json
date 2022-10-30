@@ -28,8 +28,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src",
-    "tests"
+    "src/"
   ],
   "references": [
     {
