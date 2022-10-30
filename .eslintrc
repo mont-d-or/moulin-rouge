@@ -2,7 +2,8 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "airbnb-typescript/base"
+    "airbnb-typescript/base",
+    "airbnb/hooks"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -28,6 +29,7 @@
     "@typescript-eslint/semi": "off"
   },
   "plugins": [
-    "import"
+    "import",
+    "jsx-a11y"
   ]
 }

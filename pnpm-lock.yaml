@@ -398,8 +398,8 @@ packages:
       '@babel/types': 7.19.4
     dev: true
 
-  /@babel/runtime-corejs3/7.19.6:
-    resolution: {integrity: sha512-oWNn1ZlGde7b4i/3tnixpH9qI0bOAACiUs+KEES4UUCnsPjVWFlWdLV/iwJuPC2qp3EowbAqsm+0XqNwnwYhxA==}
+  /@babel/runtime-corejs3/7.20.0:
+    resolution: {integrity: sha512-v1JH7PeAAGBEyTQM9TqojVl+b20zXtesFKCJHu50xMxZKD1fX0TKaKHPsZfFkXfs7D1M9M6Eeqg1FkJ3a0x2dA==}
     engines: {node: '>=6.9.0'}
     dependencies:
       core-js-pure: 3.26.0
@@ -1237,7 +1237,7 @@ packages:
     engines: {node: '>=6.0'}
     dependencies:
       '@babel/runtime': 7.19.4
-      '@babel/runtime-corejs3': 7.19.6
+      '@babel/runtime-corejs3': 7.20.0
     dev: true
 
   /array-includes/3.1.5:
@@ -1285,8 +1285,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /axe-core/4.4.3:
-    resolution: {integrity: sha512-32+ub6kkdhhWick/UjvEwRchgoetXqTK14INLqbGm5U2TzBkBNF3nQtLYm8ovxSkQWArjEQvftCKryjZaATu3w==}
+  /axe-core/4.5.0:
+    resolution: {integrity: sha512-4+rr8eQ7+XXS5nZrKcMO/AikHL0hVqy+lHWAnE3xdHl+aguag8SOQ6eEqLexwLNWgXIMfunGuD3ON1/6Kyet0A==}
     engines: {node: '>=4'}
     dev: true
 
@@ -2082,7 +2082,7 @@ packages:
       aria-query: 4.2.2
       array-includes: 3.1.5
       ast-types-flow: 0.0.7
-      axe-core: 4.4.3
+      axe-core: 4.5.0
       axobject-query: 2.2.0
       damerau-levenshtein: 1.0.8
       emoji-regex: 9.2.2

@@ -1,6 +1,6 @@
 import 'react-datepicker/dist/react-datepicker.css'
 import './App.css'
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import PeriodEvent from './PeriodEvent'
 import moment from 'moment'
@@ -33,7 +33,7 @@ const App = () => {
     if (selectedDate == null || history == undefined) {
       return
     }
-    setHistory(oldHistory => {
+    setHistory((oldHistory) => {
       const newHistory = new Set([...(oldHistory || new Set())])
       newHistory.add(moment(selectedDate))
       return newHistory
@@ -46,20 +46,22 @@ const App = () => {
       <h1>Moulin Rouge</h1>
       <div>
         {
-          history && [...history].map(d =>
-          <PeriodEvent
-            key={d.toString()}
-            date={d}
-            onDelete={() => setHistory(old => {
-              const newHistory = new Set([...old || new Set()])
-              newHistory.delete(d)
-              return newHistory
-            })}/>)
+          history && [...history].map((d) => (
+            <PeriodEvent
+              key={d.toString()}
+              date={d}
+              onDelete={() => setHistory((old) => {
+                const newHistory = new Set([...old || new Set()])
+                newHistory.delete(d)
+                return newHistory
+              })}
+            />
+          ))
         }
       </div>
-      <div className='card'>
-        <DatePicker selected={selectedDate} name='datepicker' onChange={date => setSelectedDate(date)} />
-        <button onClick={addDateToHistory} type='button'>Add</button>
+      <div className="card">
+        <DatePicker selected={selectedDate} name="datepicker" onChange={(date: SetStateAction<Date | null>) => setSelectedDate(date)} />
+        <button onClick={addDateToHistory} type="button" id="periodDate" aria-label='Add a new date'>Add</button>
       </div>
     </div>
   )
