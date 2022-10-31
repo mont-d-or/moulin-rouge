@@ -6,15 +6,12 @@ const openPage = async (page: Page) => {
 
 const addDateFromDatePicker = async (page: Page, choosenDate: string) => {
   await page.locator('input[name="datepicker"]').click()
-  await page.getByRole('option', { name: `Choose ${choosenDate}` }).click()
-  await page.getByRole('button', { name: 'Add' }).click()
+  await page.getByRole('option', { name: `Choose ${choosenDate}` }).click();
+  await page.getByRole('button', { name: 'Add a new date' }).click();
 }
 
 test('adds one item into the history', async ({ page }) => {
   await openPage(page)
-
   await addDateFromDatePicker(page, 'Tuesday, October 18th, 2022')
-
-  const dateHistoryItem = page.getByText('18-10-2022')
-  await expect(dateHistoryItem).toHaveClass('history-item')
+  await expect(page.locator('.history-item > div')).toHaveText('18/10/2022')
 })
