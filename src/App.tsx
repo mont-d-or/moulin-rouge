@@ -1,67 +1,46 @@
 import 'react-datepicker/dist/react-datepicker.css'
 import './App.css'
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import DatePicker from 'react-datepicker'
-import PeriodEvent from './PeriodEvent'
+import PeriodEvent from './components/PeriodEvent'
+import Status from './components/Status'
 import moment from 'moment'
-
-interface MoulinRougeData {
-  historyItems: Set<moment.Moment>
-}
-
-const loadFromLocalStorage: () => MoulinRougeData = () => {
-  console.log('Load from local storage')
-  const storedData = window.localStorage.getItem('previousDates')
-  if (storedData == null) {
-    return { historyItems: new Set() }
-  }
-  const parsedData = JSON.parse(storedData) as MoulinRougeData
-  return parsedData
-}
-
-const saveIntoLocalStorage = (data: MoulinRougeData) => {
-  console.log('Save into local storage:', data.historyItems.size)
-  const localStorageString = JSON.stringify(data)
-  window.localStorage.setItem('previousDates', localStorageString)
-}
+import useLocalStorage from 'use-local-storage'
 
 const App = () => {
-  const [history, setHistory] = useState<Set<moment.Moment> | undefined>(undefined)
+  const [history, setHistory] = useLocalStorage<Array<moment.Moment> | undefined>('historyItems', undefined)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
-  useEffect(() => history && saveIntoLocalStorage({ historyItems: history }), [history])
-  useEffect(() => setHistory(loadFromLocalStorage().historyItems), [])
-
   const addDateToHistory = () => {
-    if (selectedDate == null || history == undefined) {
+    if (selectedDate == null) {
       return
     }
     setHistory((oldHistory) => {
-      const newHistory = new Set([...(oldHistory || new Set())])
-      newHistory.add(moment(selectedDate))
-      return newHistory
+      console.log(oldHistory || [])
+      const newHistory = new Set<moment.Moment>(oldHistory || [])
+      return [...newHistory.add(moment(selectedDate))]
     })
     setSelectedDate(null)
   }
-
   return (
     <div>
       <h1>Moulin Rouge</h1>
-      <div>
+      <div className='card'>
         {
-          history && [...history].map((d) => (
+          history && history instanceof Array && [...history].map((d) => (
             <PeriodEvent
               key={d.toString()}
               date={d}
               onDelete={() => setHistory((old) => {
-                const newHistory = new Set([...old || new Set()])
+                const newHistory = new Set([...old || []])
                 newHistory.delete(d)
-                return newHistory
+                return [...newHistory]
               })}
             />
           ))
         }
       </div>
+      <Status />
       <div className="card">
         <DatePicker selected={selectedDate} name="datepicker" onChange={(date: SetStateAction<Date | null>) => setSelectedDate(date)} />
         <button onClick={addDateToHistory} type="button" id="periodDate" aria-label='Add a new date'>Add</button>

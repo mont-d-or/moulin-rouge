@@ -8,7 +8,7 @@ interface Props {
 const PeriodEvent = ({ date, onDelete }: Props) => {
   return (
     <div className="history-item shared-flex-row">
-      <div>{date.format('DD/MM/YYYY')}</div>
+      <div>{moment(date).format('DD/MM/YYYY')}</div>
       <button type="button" onClick={onDelete} aria-label='Remove this date'>X</button>
     </div>
   )
