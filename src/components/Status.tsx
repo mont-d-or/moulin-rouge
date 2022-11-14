@@ -1,12 +1,17 @@
-//import useLocalStorage from 'use-local-storage'
+import moment from 'moment'
+import useLocalStorage from 'use-local-storage'
 
 const Status = () => {
 
-  //const [history] = useLocalStorage<Set<moment.Moment> | undefined>('historyItems', undefined)
-  // const [history] = useLocalStorage<Set<moment.Moment>>('historyItems', new Set())
+  const [history] = useLocalStorage<Array<number> | undefined>('historyItems', undefined)
 
+  if (!history || history.length == 0) {
+    return (<div/>)
+  }
   return (
-    <div>aaa
+    <div>
+      <div>Last periods: {moment(new Date(history[history.length - 1])).format('DD/MM/YYYY')}</div>
+      <div>Next ones: {moment(new Date(history[history.length - 1])).add(28, 'days').format('DD/MM/YYYY')}</div>
     </div>
   )
 }

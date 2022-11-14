@@ -8,7 +8,7 @@ import moment from 'moment'
 import useLocalStorage from 'use-local-storage'
 
 const App = () => {
-  const [history, setHistory] = useLocalStorage<Array<moment.Moment> | undefined>('historyItems', undefined)
+  const [history, setHistory] = useLocalStorage<Array<number> | undefined>('historyItems', undefined)
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
   const addDateToHistory = () => {
@@ -17,8 +17,8 @@ const App = () => {
     }
     setHistory((oldHistory) => {
       console.log(oldHistory || [])
-      const newHistory = new Set<moment.Moment>(oldHistory || [])
-      return [...newHistory.add(moment(selectedDate))]
+      const newHistory = new Set<number>(oldHistory || [])
+      return [...newHistory.add(selectedDate.getTime())].sort()
     })
     setSelectedDate(null)
   }
@@ -30,7 +30,7 @@ const App = () => {
           history && history instanceof Array && [...history].map((d) => (
             <PeriodEvent
               key={d.toString()}
-              date={d}
+              date={moment(new Date(d))}
               onDelete={() => setHistory((old) => {
                 const newHistory = new Set([...old || []])
                 newHistory.delete(d)
