@@ -9,7 +9,7 @@ const Status = () => {
     return (<div/>)
   }
   return (
-    <div>
+    <div className='card'>
       <div>Last periods: {moment(new Date(history[history.length - 1])).format('DD/MM/YYYY')}</div>
       <div>Next ones: {moment(new Date(history[history.length - 1])).add(28, 'days').format('DD/MM/YYYY')}</div>
     </div>
