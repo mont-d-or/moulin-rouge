@@ -21,10 +21,17 @@ Based on vitejs + reactjs + typescript.
 
 ### Run Playwright tests
 
-    pnpm dlx playwright test
+Make sure the server is up and running, then run:
+
+    pnpm playwright test
 
 Use option `--trace on` to get details about failing execution.
 
 ### Generate new playwright tests
 
     pnpm dlx playwright codegen
+
+### Update browsers after playwright update
+
+    pnpm exec playwright install
+
