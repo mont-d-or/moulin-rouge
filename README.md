@@ -25,7 +25,9 @@ Make sure the server is up and running, then run:
 
     pnpm playwright test
 
-Use option `--trace on` to get details about failing execution.
+Options:
+- `--trace on` to get details about failing execution.
+- `--ui` to run the test from the UI and generate execution video.
 
 ### Generate new playwright tests
 
