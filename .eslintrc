@@ -34,7 +34,8 @@
         "maxBOF": 0,
         "maxEOF": 1
       }
-    ]
+    ],
+    "@typescript-eslint/comma-dangle": "off"
   },
   "plugins": [
     "import"
