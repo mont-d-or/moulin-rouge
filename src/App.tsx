@@ -16,12 +16,23 @@ const App = () => {
     if (selectedDate == null) {
       return
     }
-    const newItem = {startDate: moment(selectedDate), endDate: moment(selectedDate).add(1, 'day')}
-    setHistory(previousHistory => {
-      const newSet = new Set<HistoryItem>(previousHistory ? previousHistory : undefined)
-      newSet.add(newItem)
-      return Array.from(newSet)
-    })
+
+    if (history.length > 0 && !history[history.length-1].endDate) {
+      // add end date to last item
+      setHistory(previousHistory => {
+        const newArray = previousHistory ? [...previousHistory] : []
+        newArray[newArray.length-1].endDate = moment(selectedDate)
+        return newArray
+      })
+    } else {
+       // add new item
+      const newItem = {startDate: moment(selectedDate), endDate: undefined}
+      setHistory(previousHistory => {
+        const newArray = previousHistory ? [...previousHistory] : []
+        newArray.push(newItem)
+        return newArray
+      })
+    }
     setSelectedDate(null)
   }
 

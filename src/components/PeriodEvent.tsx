@@ -2,7 +2,7 @@ import moment from 'moment'
 
 export type HistoryItem = {
   startDate: moment.Moment
-  endDate: moment.Moment
+  endDate?: moment.Moment
 }
 
 interface Props {
@@ -13,7 +13,9 @@ interface Props {
 const PeriodEvent = ({ event, onDelete }: Props) => {
   return (
     <div className="history-item shared-flex-row">
-      <div>From {moment(event.startDate).format('DD/MM/YYYY')} to {moment(event.endDate).format('DD/MM/YYYY')}</div>
+      <span>From {moment(event.startDate).format('DD/MM/YYYY')} &nbsp;</span>
+      { event.endDate ? <span>to {moment(event.endDate).format('DD/MM/YYYY')}</span> : 'still ongoing' }
+
       <button type="button" onClick={onDelete} aria-label='Remove this date'>🗑️</button>
     </div>
   )
