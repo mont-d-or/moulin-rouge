@@ -37,3 +37,7 @@ Options:
 
     pnpm exec playwright install
 
+### Update local pnpm version
+
+    pnpm add -g @pnpm/exe
+
