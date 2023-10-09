@@ -46,6 +46,16 @@ const App = () => {
     })
   }
 
+  let minDate = null
+  let text = null
+  if (history.length == 0 || history[history.length-1].endDate) {
+    text = 'Pick a start date'
+  } else
+  {
+    minDate = history[history.length-1].startDate.toDate()
+    text = 'Pick an end date'
+  }
+
   return (
     <div>
       <h1>Moulin Rouge</h1>
@@ -62,7 +72,13 @@ const App = () => {
       </div>
       <Status />
       <div className="card">
-        <DatePicker selected={selectedDate} name="datepicker" onChange={(date: SetStateAction<Date | null>) => setSelectedDate(date)} />
+        <div>{text}</div>
+        <DatePicker
+          selected={selectedDate}
+          name="datepicker"
+          minDate={minDate}
+          onChange={(date: SetStateAction<Date | null>) => { setSelectedDate(date) }}
+          />
         <button onClick={addToHistory} disabled={!selectedDate} type="button" id="periodDate" aria-label='Add a new date'>Add</button>
       </div>
     </div>
