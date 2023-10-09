@@ -1,9 +1,5 @@
+import { HistoryItem } from '../types/HistoryItem'
 import moment from 'moment'
-
-export type HistoryItem = {
-  startDate: moment.Moment
-  endDate?: moment.Moment
-}
 
 interface Props {
   event: HistoryItem
