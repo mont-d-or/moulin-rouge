@@ -17,16 +17,18 @@ const App = () => {
       return
     }
 
+    // This way fixes issue with date displayed in UTC and shifting 2 hours before, i.e. the day before at 2PM.
+    const selectedMoment = moment.utc([selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()])
     if (history.length > 0 && !history[history.length-1].endDate) {
       // add end date to last item
       setHistory(previousHistory => {
         const newArray = previousHistory ? [...previousHistory] : []
-        newArray[newArray.length-1].endDate = moment(selectedDate)
+        newArray[newArray.length-1].endDate = selectedMoment
         return newArray
       })
     } else {
        // add new item
-      const newItem = {startDate: moment(selectedDate), endDate: undefined}
+      const newItem = {startDate: selectedMoment, endDate: undefined}
       setHistory(previousHistory => {
         const newArray = previousHistory ? [...previousHistory] : []
         newArray.push(newItem)
