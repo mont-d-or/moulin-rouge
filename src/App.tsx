@@ -3,6 +3,7 @@ import './App.css'
 import { SetStateAction, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { HistoryItem } from './types/HistoryItem'
+import PeriodCalendar from './components/PeriodCalendar'
 import PeriodEvent from './components/PeriodEvent'
 import Status from './components/Status'
 import moment from 'moment'
@@ -59,6 +60,7 @@ const App = () => {
   return (
     <div>
       <h1>Moulin Rouge</h1>
+      <PeriodCalendar history={history} />
       <div className='card'>
         {
           history && [...history].map((i: HistoryItem) => (

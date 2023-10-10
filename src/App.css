@@ -9,3 +9,13 @@ h1 {
   margin: 10px;
   padding: 10px;
 }
+
+svg rect.green {
+  stroke: yellowgreen;
+  fill: greenyellow;
+}
+
+svg rect.red {
+  stroke: red;
+  fill: red;
+}
