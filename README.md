@@ -44,4 +44,3 @@ Options:
 ### Format all files
 
     pnpm exec prettier . --write
-

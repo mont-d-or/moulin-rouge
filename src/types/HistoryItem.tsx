@@ -1,4 +1,4 @@
 export type HistoryItem = {
-  startDate: moment.Moment
-  endDate?: moment.Moment
-}
+  startDate: moment.Moment;
+  endDate?: moment.Moment;
+};
