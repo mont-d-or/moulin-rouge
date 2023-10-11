@@ -1,6 +1,5 @@
 # Moulin Rouge project
 
-
 ## Development
 
 Based on vitejs + reactjs + typescript.
@@ -26,6 +25,7 @@ Make sure the server is up and running, then run:
     pnpm playwright test
 
 Options:
+
 - `--trace on` to get details about failing execution.
 - `--ui` to run the test from the UI and generate execution video.
 
@@ -40,4 +40,8 @@ Options:
 ### Update local pnpm version
 
     pnpm add -g @pnpm/exe
+
+### Format all files
+
+    pnpm exec prettier . --write
 

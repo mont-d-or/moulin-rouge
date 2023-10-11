@@ -1,0 +1,8 @@
+# Ignore artifacts:
+build
+coverage
+playwright-report
+test-results
+# Slow generated files:
+pnpm-lock.yaml
+#
