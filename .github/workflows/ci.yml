@@ -1,0 +1,42 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - name: Use pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
+            - args: [--global, prettier, typescript]
+      - name: Check prettier
+        run: |
+          pnpm exec prettier . -c
+      - name: Build
+        run: |
+          pnpm install
+          pnpm build --base=/moulin-rouge/
+      - name: Unit tests
+        run: |
+          pnpm test
+      - name: Setup playwright
+        run: |
+          pnpm playwright install --with-deps chromium firefox
+      - name: E2E tests
+        run: |
+          pnpm playwright test --trace on --reporter list
+      - uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: playwright-report
+          path: test-results
