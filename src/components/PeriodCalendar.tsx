@@ -21,11 +21,29 @@ const maxDate = (d1: Moment, d2: Moment | undefined): Moment => {
 };
 
 interface MonthSvgProps {
-  daysInMonth: number;
-  daysWithPeriod: Array<number>;
+  firstMonthDay: Moment;
+  eventsInMonth: Array<HistoryItem>;
 }
 
-const MonthSvg = ({ daysInMonth, daysWithPeriod }: MonthSvgProps) => {
+const isDayInInterval = (
+  intervalStart: Moment,
+  intervalEnd: Moment,
+  day: Moment,
+): boolean => {
+  return intervalStart.isSameOrBefore(day) && intervalEnd.isSameOrAfter(day);
+};
+
+const areDateOveralppingInterval = (
+  interval1Start: Moment,
+  interval1End: Moment,
+  interval2Start: Moment,
+  interval2End: Moment,
+): boolean =>
+  moment
+    .max(interval1Start, moment(interval2Start))
+    .isSameOrBefore(moment.min(interval1End, interval2End));
+
+const MonthSvg = ({ firstMonthDay, eventsInMonth }: MonthSvgProps) => {
   const dayHeight = 15;
   const dayWidth = 7;
   const spacing = 2;
@@ -36,17 +54,28 @@ const MonthSvg = ({ daysInMonth, daysWithPeriod }: MonthSvgProps) => {
       viewBox="0 0 300 15"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {[...Array(daysInMonth).keys()].map((dayInMonth) => (
-        <rect
-          rx="2"
-          key={dayInMonth}
-          className={daysWithPeriod.includes(dayInMonth) ? "red" : "green"}
-          x={dayInMonth * (dayWidth + spacing)}
-          width={dayWidth}
-          height={dayHeight}
-          shape-rendering="geometricPrecision"
-        />
-      ))}
+      {[...Array(firstMonthDay.daysInMonth()).keys()]
+        .map((index) => index + 1)
+        .map((dayInMonth) => {
+          const hasEventOnDay = eventsInMonth.find((item: HistoryItem) =>
+            isDayInInterval(
+              moment(item.startDate),
+              moment(item.endDate || item.startDate),
+              moment(firstMonthDay).date(dayInMonth),
+            ),
+          );
+          return (
+            <rect
+              rx="2"
+              key={dayInMonth}
+              className={hasEventOnDay ? "red" : "green"}
+              x={(dayInMonth - 1) * (dayWidth + spacing)}
+              width={dayWidth}
+              height={dayHeight}
+              shapeRendering="geometricPrecision"
+            />
+          );
+        })}
     </svg>
   );
 };
@@ -54,35 +83,56 @@ const MonthSvg = ({ daysInMonth, daysWithPeriod }: MonthSvgProps) => {
 const PeriodCalendar = ({ history }: Props) => {
   let firstStartDate: Moment | undefined = undefined;
   let lastEndDate: Moment | undefined = undefined;
+
   history.forEach((element) => {
     firstStartDate = minDate(moment.utc(element.startDate), firstStartDate);
     if (element.endDate)
       lastEndDate = maxDate(moment.utc(element.endDate), lastEndDate);
     else lastEndDate = maxDate(moment.utc(element.startDate), lastEndDate);
   });
+
   if (firstStartDate === undefined) return <div />;
 
   const startOfPeriod = moment(firstStartDate);
   startOfPeriod.startOf("month");
 
   const endOfPeriod = moment(lastEndDate);
-  endOfPeriod.endOf("month").add(1, "M");
+  endOfPeriod.endOf("month");
 
-  const currentMonth = moment(startOfPeriod);
+  const firstDayCurrentMonth = moment(startOfPeriod);
   const months = [];
 
-  while (currentMonth < endOfPeriod) {
+  console.log(firstStartDate, lastEndDate);
+
+  while (firstDayCurrentMonth < endOfPeriod) {
+    const lastDayCurrentMonth = moment(firstDayCurrentMonth)
+      .add(1, "M")
+      .add(-1, "d");
+    const eventsInMonth = history.filter((item) =>
+      areDateOveralppingInterval(
+        moment(item.startDate),
+        moment(item.endDate || item.startDate),
+        firstDayCurrentMonth,
+        lastDayCurrentMonth,
+      ),
+    );
+    console.log(
+      `Dans le mois ${JSON.stringify(
+        firstDayCurrentMonth,
+      )}, il y a ces events: ${JSON.stringify(eventsInMonth)}`,
+    );
     months.push(
-      <div key={JSON.stringify(currentMonth)}>
+      <div key={JSON.stringify(firstDayCurrentMonth)}>
         <MonthSvg
-          daysInMonth={currentMonth.daysInMonth()}
-          daysWithPeriod={[6, 7, 8, 9, 10]}
+          firstMonthDay={moment(firstDayCurrentMonth)}
+          eventsInMonth={eventsInMonth}
         ></MonthSvg>
-        {currentMonth.format("YYYY/MM")}
+        {firstDayCurrentMonth.format("YYYY/MM")}
       </div>,
     );
-    currentMonth.add(1, "M");
+    firstDayCurrentMonth.add(1, "M");
   }
+
   return (
     <div>
       <div className="history-item shared-flex-row">
