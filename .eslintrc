@@ -16,17 +16,8 @@
         "": "never"
       }
     ],
-    "no-trailing-spaces": [
-      "error"
-    ],
-    "sort-imports": [
-      "error"
-    ],
-    "semi": [
-      "error",
-      "never"
-    ],
-    "@typescript-eslint/semi": "off",
+    "no-trailing-spaces": ["error"],
+    "sort-imports": ["error"],
     "no-multiple-empty-lines": [
       "error",
       {
@@ -34,9 +25,28 @@
         "maxBOF": 0,
         "maxEOF": 1
       }
-    ]
+    ],
+    "semi": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    // The rest are rules that you never need to enable when using Prettier, from: https://github.com/prettier/eslint-config-prettier/blob/main/index.js
+    "@typescript-eslint/block-spacing": "off",
+    "@typescript-eslint/brace-style": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/comma-spacing": "off",
+    "@typescript-eslint/func-call-spacing": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/key-spacing": "off",
+    "@typescript-eslint/keyword-spacing": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/no-extra-parens": "off",
+    "@typescript-eslint/no-extra-semi": "off",
+    "@typescript-eslint/object-curly-spacing": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/semi": "off",
+    "@typescript-eslint/space-before-blocks": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/space-infix-ops": "off",
+    "@typescript-eslint/type-annotation-spacing": "off"
   },
-  "plugins": [
-    "import"
-  ]
+  "plugins": ["import"]
 }
