@@ -7,15 +7,15 @@ interface Props {
 }
 
 const PeriodEvent = ({ event, onDelete }: Props) => {
+  const leftSide = "From " + moment(event.startDate).format("DD/MM/YYYY");
+  const rightSide = event.endDate
+    ? " to " + moment(event.endDate).format("DD/MM/YYYY")
+    : " - still ongoing";
   return (
     <div className="history-item shared-flex-row">
-      <span>From {moment(event.startDate).format("DD/MM/YYYY")} &nbsp;</span>
-      {event.endDate ? (
-        <span>to {moment(event.endDate).format("DD/MM/YYYY")}</span>
-      ) : (
-        "still ongoing"
-      )}
-
+      <span>
+        {leftSide} {rightSide}
+      </span>
       <button type="button" onClick={onDelete} aria-label="Remove this date">
         🗑️
       </button>

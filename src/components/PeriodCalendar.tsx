@@ -102,8 +102,6 @@ const PeriodCalendar = ({ history }: Props) => {
   const firstDayCurrentMonth = moment(startOfPeriod);
   const months = [];
 
-  console.log(firstStartDate, lastEndDate);
-
   while (firstDayCurrentMonth < endOfPeriod) {
     const lastDayCurrentMonth = moment(firstDayCurrentMonth)
       .add(1, "M")
@@ -116,11 +114,7 @@ const PeriodCalendar = ({ history }: Props) => {
         lastDayCurrentMonth,
       ),
     );
-    console.log(
-      `Dans le mois ${JSON.stringify(
-        firstDayCurrentMonth,
-      )}, il y a ces events: ${JSON.stringify(eventsInMonth)}`,
-    );
+
     months.push(
       <div key={JSON.stringify(firstDayCurrentMonth)}>
         <MonthSvg
@@ -136,7 +130,6 @@ const PeriodCalendar = ({ history }: Props) => {
   return (
     <div>
       <div className="history-item shared-flex-row">
-        There are {history?.length} items.
         <br />
       </div>
       <div>{months}</div>

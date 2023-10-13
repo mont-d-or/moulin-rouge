@@ -39,7 +39,12 @@ const addDateFromDatePicker = async (page: Page, choosenDate: string) => {
 test("adds one item into the history", async ({ page }) => {
   await openPage(page);
   await addDateFromDatePicker(page, "Tuesday, October 18th, 2022");
-  await expect(page.locator(".history-item > div")).toHaveText(
-    "From 18/10/2022 to 19/10/2022",
+  await expect(page.locator(".history-item > span")).toHaveText(
+    "From 18/10/2022 - still ongoing",
+  );
+
+  await addDateFromDatePicker(page, "Monday, October 24th, 2022");
+  await expect(page.locator(".history-item > span")).toHaveText(
+    "From 18/10/2022 to 24/10/2022",
   );
 });
