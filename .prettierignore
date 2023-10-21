@@ -6,3 +6,4 @@ test-results
 # Slow generated files:
 pnpm-lock.yaml
 #
+dev-dist

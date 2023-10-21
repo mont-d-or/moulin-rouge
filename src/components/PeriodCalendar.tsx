@@ -1,6 +1,6 @@
+import moment, { Moment } from "moment";
 import { HistoryItem } from "../types/HistoryItem";
-import { Moment } from "moment";
-import moment from "moment";
+import classNames from "classnames";
 
 interface Props {
   history: Array<HistoryItem>;
@@ -48,31 +48,32 @@ const MonthSvg = ({ firstMonthDay, eventsInMonth }: MonthSvgProps) => {
   const dayWidth = 7;
   const spacing = 2;
   return (
-    <svg
-      width="500"
-      height="20"
-      viewBox="0 0 300 15"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="-1 -1 280 17" xmlns="http://www.w3.org/2000/svg">
       {[...Array(firstMonthDay.daysInMonth()).keys()]
         .map((index) => index + 1)
         .map((dayInMonth) => {
+          const currentItemDate = moment(firstMonthDay).date(dayInMonth);
           const hasEventOnDay = eventsInMonth.find((item: HistoryItem) =>
             isDayInInterval(
               moment(item.startDate),
               moment(item.endDate || item.startDate),
-              moment(firstMonthDay).date(dayInMonth),
+              currentItemDate,
             ),
           );
+          const isToday = moment().isSame(currentItemDate, "day");
           return (
             <rect
               rx="2"
               key={dayInMonth}
-              className={hasEventOnDay ? "red" : "green"}
+              aria-label={dayInMonth.toString()}
+              className={classNames({
+                red: hasEventOnDay,
+                green: !hasEventOnDay,
+                active: isToday,
+              })}
               x={(dayInMonth - 1) * (dayWidth + spacing)}
               width={dayWidth}
               height={dayHeight}
-              shapeRendering="geometricPrecision"
             />
           );
         })}

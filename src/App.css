@@ -19,3 +19,11 @@ svg rect.red {
   stroke: red;
   fill: red;
 }
+
+svg rect.active {
+  stroke: blue;
+}
+
+svg {
+  width: 80%;
+}
