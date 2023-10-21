@@ -28,9 +28,9 @@ export default defineConfig((configEnv) => ({
         name: "Moulin Rouge",
         icons: [
           {
-            src: "./vite_64.png",
+            src: "./vite_192.png",
             type: "image/png",
-            sizes: "64x64",
+            sizes: "192x192",
           },
           {
             src: "./vite.svg",
