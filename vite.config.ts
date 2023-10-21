@@ -26,14 +26,16 @@ export default defineConfig((configEnv) => ({
       },
       manifest: {
         name: "Moulin Rouge",
+        short_name: "Moulin Rouge",
+        description: "Moulin Rouge",
         icons: [
           {
-            src: "./vite_192.png",
+            src: "vite_192.png",
             type: "image/png",
             sizes: "192x192",
           },
           {
-            src: "./vite.svg",
+            src: "vite.svg",
             type: "image/svg+xml",
             sizes: "512x512",
           },
