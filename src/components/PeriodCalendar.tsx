@@ -1,6 +1,5 @@
+import moment, { Moment } from "moment";
 import { HistoryItem } from "../types/HistoryItem";
-import { Moment } from "moment";
-import moment from "moment";
 import classNames from "classnames";
 
 interface Props {
